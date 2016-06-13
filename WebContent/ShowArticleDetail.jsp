@@ -43,7 +43,7 @@
 		</tr>
 	</table>
 
-	<a href="Reply.jsp?id=<%=rs.getInt("id")%>&rootid=<%=rs.getInt("rootid")%>">»Ø¸´</a>
+	<a href="Reply.jsp?id=<%=rs.getInt("id")%>&rootid=<%=rs.getInt("rootid")%>">Reply</a>
 	<%
 		}
 		rs.close();

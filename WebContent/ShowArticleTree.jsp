@@ -18,7 +18,7 @@
 			while (rs.next()) {
 				str += "<tr><td>" + rs.getInt("id") + "</td><td>" + preStr + 
 					   "<a href='ShowArticleDetail.jsp?id=" + rs.getInt("id") + "'>" + rs.getString("title") + "</a></td>" + //显示帖子detail的链接
-					   "<td><a href='Delete.jsp?id="+ rs.getInt("id") + "&pid=" + rs.getInt("pid") + "'>删除</a>" + //删除帖子的链接，需传入当前id与父节点id。
+					   "<td><a href='Delete.jsp?id="+ rs.getInt("id") + "&pid=" + rs.getInt("pid") + "'>Delete</a>" + //删除帖子的链接，需传入当前id与父节点id。
 					   "</td></tr>";
 				if (rs.getInt("isleaf") != 0) { //current node has child node
 					tree(conn, rs.getInt("id"), level + 1); //递归调用tree(), 传入当前node的id
@@ -56,7 +56,7 @@
 		//输出主题的id，title
 		str += "<tr><td>" + rs.getInt("id") + "</td><td>" + 
 		       "<a href='ShowArticleDetail.jsp?id=" + rs.getInt("id") + "'>" + rs.getString("title") + "</a></td>" +//显示帖子detail的链接
-			   "<td><a href='Delete.jsp?id="+ rs.getInt("id") + "&pid=" + rs.getInt("pid") + "'>删除</a>" + //删除帖子的链接,需传入当前id与父节点id。
+			   "<td><a href='Delete.jsp?id="+ rs.getInt("id") + "&pid=" + rs.getInt("pid") + "'>Delete</a>" + //删除帖子的链接,需传入当前id与父节点id。
 			   "</td></tr>";
 		//str += String.format("<tr><td>%d</td></tr><a href='ShowArticleDetail.jsp?id=", rs.getInt("id"));
 		if (rs.getInt("isleaf") != 0) {//如果当前node还有子节点
@@ -76,6 +76,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<a href="Post.jsp">Post a new article</a>
+	
 	<table border="1">
 		<%=str%>
 		<%
