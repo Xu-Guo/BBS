@@ -16,6 +16,8 @@
 			//return;
 		}else {
 			out.println("Welcome admin!");
+			session.setAttribute("admin", "true");
+			response.sendRedirect("ShowArticleTree.jsp");
 		}
 	}
 %>
@@ -36,7 +38,7 @@ li {
 <body>
 	<div
 		style="margin: 10% 0px 0px 40%; border: 2px solid black; width: 300px">
-		<form action="login.jsp" method="post">
+		<form action="Login.jsp" method="post">
 		<input type="hidden" name=action value=login>
 			<ul>
 				<li></li>
