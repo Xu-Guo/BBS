@@ -79,8 +79,22 @@
 		%>
 	</table>
 	Total Pages:<%=totalPages %>   Page:<%=pageNum %>
-	<a href="ShowArticleFlat.jsp?pageNum=<%=pageNum-1%>"> < </a> &nbsp;&nbsp;&nbsp;
+	<a href="ShowArticleFlat.jsp?pageNum=<%=pageNum-1%>"> < </a>
+	&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href="ShowArticleFlat.jsp?pageNum=<%=pageNum+1%>"> > </a>
+	
+	<form action="form1">
+		<select name="pageNum">
+		<% 
+		for(int i=1; i<=totalPages; i++){
+		%>
+		<option value=<%=i%>> Page:<%=i%>
+		<%
+		}		
+		%>
+		</select>	
+	
+	</form>
 
 
 </body>
