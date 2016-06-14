@@ -12,14 +12,41 @@
 %>
 
 
-<%
+<%	
+	int pageSize = 3;
+
+	String strPageNum = request.getParameter("pageNum");
+	int pageNum = 1;
+	if(strPageNum == null || strPageNum.equals("")){
+		pageNum = 1;
+	}else{
+		try{
+		pageNum = Integer.parseInt(strPageNum.trim());
+		}catch(NumberFormatException e){
+			pageNum = 1;
+		}
+		if(pageNum<=0) pageNum = 1;
+	}
+	
+	
+	
+	
 	Class.forName("com.mysql.jdbc.Driver");
 
 	String url = "jdbc:mysql://localhost/bbs?user=root&password=mysql";
 	Connection conn = DriverManager.getConnection(url);
-
+	
+	Statement stmtCount = conn.createStatement();
+	ResultSet rsCount = stmtCount.executeQuery("select count(*) from article where pid = 0");
+	rsCount.next();
+	int totalRecords = rsCount.getInt(1);
+	
+	int totalPages = totalRecords % pageSize == 0 ? totalRecords / pageSize : totalRecords / pageSize + 1;// 计算总页数
+	if(pageNum > totalPages) pageNum = totalPages;
+	int startPos = (pageNum -1) * pageSize;
+	
 	Statement stmt = conn.createStatement();
-	ResultSet rs = stmt.executeQuery("select * from article where pid = 0");//找出所有root node，主题node
+	ResultSet rs = stmt.executeQuery("select * from article where pid = 0 order by pdate desc limit " + startPos + "," + pageSize);//找出所有root node，主题node,按pdate倒叙排列，并且按每页pageSize个分页显示
 %>
 
 
@@ -32,6 +59,7 @@
 <body>
 
 	<a href="Post.jsp">Post a new article</a>
+	
 
 	<table border="1">
 		<%
@@ -39,7 +67,7 @@
 		%>
 				<tr>
 					<td>
-						<%= rs.getString("cont")%>
+						<%= rs.getString("title")%>
 					</td>
 				</tr>
 
@@ -50,6 +78,9 @@
 			conn.close();
 		%>
 	</table>
+	Total Pages:<%=totalPages %>   Page:<%=pageNum %>
+	<a href="ShowArticleFlat.jsp?pageNum=<%=pageNum-1%>"> < </a> &nbsp;&nbsp;&nbsp;
+	<a href="ShowArticleFlat.jsp?pageNum=<%=pageNum+1%>"> > </a>
 
 
 </body>
