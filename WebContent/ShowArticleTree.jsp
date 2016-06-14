@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=gbk"
 	pageEncoding="gbk"%><%@page import="java.sql.*"%>
 	
-<%!boolean login = false;%>
+
 <%
 	String admin = (String) session.getAttribute("admin");
 	//boolean login = false;
@@ -16,7 +16,7 @@
 	//	private void tree(Connection conn, int id, int level) {
 	//	tree(conn, id, level, false);
 	//}
-	
+	boolean login = false;
 	private void tree(Connection conn, int id, int level) { //@展示 level:当前node的缩进等级，如果为root无缩进
 		Statement stmt = null;
 		ResultSet rs = null;

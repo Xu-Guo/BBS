@@ -30,7 +30,7 @@
 		rsKey.next();
 		int key = rsKey.getInt(1);
 		rsKey.close();
-		stmt.executeUpdate("update article set rootid = " + key + "where id = " + key);
+		stmt.executeUpdate("update article set rootid = " + key + " where id = " + key);
 
 		conn.commit();
 		conn.setAutoCommit(true);
@@ -39,7 +39,7 @@
 		pstmt.close();
 		conn.close();
 
-		response.sendRedirect("ShowArticleTree.jsp");//问题
+		response.sendRedirect("ShowArticleFlat.jsp");//问题
 	}
 %>
 
