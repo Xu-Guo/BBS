@@ -1,23 +1,26 @@
 <!--当前页面本身编码  -->
 <%@ page language="java" contentType="text/html; charset=gbk"
 	pageEncoding="gbk"%><%@page import="java.sql.*"%>
-
+	
+<%!boolean login = false;%>
 <%
 	String admin = (String) session.getAttribute("admin");
-	boolean login = false;
+	//boolean login = false;
 	if (admin != null && admin.equals("true")) {
 		login = true;
 	}
 %>
 
 <%!String str = "";
-	
 
-	private void tree(Connection conn, int id, int level,boolean login) { //@展示 level:当前node的缩进等级，如果为root无缩进
+	//	private void tree(Connection conn, int id, int level) {
+	//	tree(conn, id, level, false);
+	//}
+	
+	private void tree(Connection conn, int id, int level) { //@展示 level:当前node的缩进等级，如果为root无缩进
 		Statement stmt = null;
 		ResultSet rs = null;
-		
-		
+
 		String preStr = "";
 		for (int i = 0; i < level; i++) {
 			preStr += "----";//@展示 缩进字符串
@@ -26,7 +29,7 @@
 			stmt = conn.createStatement();
 			String sql = "select * from article where pid = " + id; //pid:父节点id
 			rs = stmt.executeQuery(sql);
-			
+
 			String strLogin = "";
 
 			while (rs.next()) {
@@ -38,7 +41,7 @@
 						+ rs.getInt("id") + "'>" + rs.getString("title") + "</a></td>" + //显示帖子detail的链接
 						strLogin + "</td></tr>";
 				if (rs.getInt("isleaf") != 0) { //current node has child node
-					tree(conn, rs.getInt("id"), level + 1,login); //递归调用tree(), 传入当前node的id
+					tree(conn, rs.getInt("id"), level + 1);
 				}
 			}
 		} catch (SQLException e) {
@@ -80,7 +83,7 @@
 				strLogin + "</td></tr>";//删除帖子的链接,需传入当前id与父节点id。
 		//str += String.format("<tr><td>%d</td></tr><a href='ShowArticleDetail.jsp?id=", rs.getInt("id"));
 		if (rs.getInt("isleaf") != 0) {//如果当前node还有子节点
-			tree(conn, rs.getInt("id"), 1,login);//
+			tree(conn, rs.getInt("id"), 1);//
 		}
 	}
 	rs.close();

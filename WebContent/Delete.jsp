@@ -3,6 +3,9 @@
 
 <%@ page import="java.sql.*"%>
 
+
+
+
 <%!private void del(Connection conn, int id) {
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -34,6 +37,14 @@
 	}%>
 
 <%
+	String admin = (String) session.getAttribute("admin");
+	if (admin == null || !admin.equals("true")) {
+		out.println("not admin!!");
+		return;
+	}
+%>
+
+<%
 	int id = Integer.parseInt(request.getParameter("id"));
 	int pid = Integer.parseInt(request.getParameter("pid"));
 
@@ -49,10 +60,10 @@
 	int count = rs.getInt(1);//占位符，只有1个字段。
 	rs.close();
 	stmt.close();
-	
-	if(count <=0){
+
+	if (count <= 0) {
 		Statement stmtUpdate = conn.createStatement();
-		stmtUpdate.executeUpdate("update article set isleaf = 0 where id = " + pid );
+		stmtUpdate.executeUpdate("update article set isleaf = 0 where id = " + pid);
 		stmtUpdate.close();
 	}
 
