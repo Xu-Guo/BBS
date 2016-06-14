@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=gbk"
-    pageEncoding="gbk"%>
-    
+	pageEncoding="gbk"%>
+
 
 <%
 int id = Integer.parseInt(request.getParameter("id"));
@@ -11,9 +11,52 @@ int rootid = Integer.parseInt(request.getParameter("rootid"));
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gbk">
 <title>Insert title here</title>
+
+
+<script language="javascript">
+<!--
+	//javascript remove "space" function
+	function LTrim(str){//remove head space
+		var i;
+		for(i=0;i<str.length;i++){
+			if(str.charAt(i)!=" ")break;
+		}
+		str = str.substring(i,str.length);
+		return str;
+	}
+	
+	function RTrim(str){
+		var i;
+		for(i=str.length-1;i>=0;i--){
+			if(str.charAt(i)!=" "&&str.charAt(i)!=" ") break;
+		}
+		str=str.substring(0,i+1);
+		return str;
+	}
+	
+	function Trim(str){
+		return LTrim(RTrim(str));
+	}
+	
+	function check(){
+		if(Trim(document.reply.title.value)==""){
+			alert("Please input the title!");
+			document.reply.title.focus();
+			return false;
+		}
+		
+		if(Trim(document.reply.cont.value)==""){
+			alert("Please input the content!");
+			document.reply.cont.focus();
+			return false;
+		}
+		return true;
+	}
+-->
+</script>
 </head>
 <body>
-<form action="ReplyOK.jsp" method="post">
+<form name=reply action="ReplyOK.jsp" method="post" onsubmit="return check()">
 	<input type="hidden" name="id" value="<%= id %>">
 	<input type="hidden" name="rootid" value="<%= rootid %>">
 	<table border="1">
